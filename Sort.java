@@ -47,6 +47,27 @@ public class Sort<T extends Comparable<T>> {
         return list;
     }
 
+    public List<T> insertionSort(List<T> list) {
+        // iterate over entire list
+        for(int i = 0; i < list.size(); i++) {
+            // if list is sorted in opposite order, this comparison avoids 2nd loop
+            if(list.get(0).compareTo(list.get(i)) > 0) {
+                list.add(0, list.remove(i));
+                continue;
+            }
+            // iterate over already sorted list
+            for(int j = 0; j < i; j++) {
+                // compare current item j with item i
+                if(list.get(j).compareTo(list.get(i)) > 0) {
+                    // remove current item and place it where it belongs
+                    list.add(j, list.remove(i));
+                    break;
+                }
+            }
+        }
+        return list;
+    }
+
 
 
 }
