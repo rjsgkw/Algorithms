@@ -2,10 +2,13 @@
 Sorting methods using Generics.
  */
 
-import java.util.List;
+import java.util.*;
 
 public class Sort<T extends Comparable<T>> {
 
+    /*
+    max item bubbles to the top of the list
+     */
     public List<T> bubbleSort(List<T> list) {
         // loop through the entire list
         for(int i = 0; i < list.size(); i++) {
@@ -24,12 +27,16 @@ public class Sort<T extends Comparable<T>> {
         return list;
     }
 
+    /*
+    min item is selected, then added to the beginning of unsorted list.
+    next iteration, it becomes the last item in the sorted list
+     */
     public List<T> selectionSort(List<T> list) {
         // loop through the entire list
         for(int i = 0; i < list.size(); i++) {
             T min = list.get(i);
             int minIndex = i;
-            // loop through remaining list
+            // loop through remaining unsorted list
             for(int j = i; j < list.size()-1; j++) {
                 // find the minimum
                 if(min.compareTo(list.get(j+1)) > 0) {
@@ -47,6 +54,9 @@ public class Sort<T extends Comparable<T>> {
         return list;
     }
 
+    /*
+    current item in unsorted list is inserted into sorted list
+     */
     public List<T> insertionSort(List<T> list) {
         // iterate over entire list
         for(int i = 0; i < list.size(); i++) {
@@ -66,6 +76,48 @@ public class Sort<T extends Comparable<T>> {
             }
         }
         return list;
+    }
+
+    /*
+    divide and conquer
+     */
+    public List<T> mergeSort(List<T> list) {
+        if(list.size() == 1)
+            return list;
+        // split the list
+        int half = list.size() / 2;
+        List<T> left = mergeSort(list.subList(0, half));
+        List<T> right = mergeSort(list.subList(half, list.size()));
+        return merge(left, right);
+    }
+
+    // sort and merge
+    private List<T> merge(List<T> left, List<T> right) {
+        List<T> sortedList = new ArrayList<>();
+
+        int countLeft = 0;
+        int countRight = 0;
+        // check if either one reaches end of the list
+        while (countLeft != left.size() && countRight != right.size()) {
+            // check for min
+            if (left.get(countLeft).compareTo(right.get(countRight)) > 0) {
+                // min is added to sortedList
+                sortedList.add(right.get(countRight));
+                countRight++;
+            } else {
+                // min is added to sortedList
+                sortedList.add(left.get(countLeft));
+                countLeft++;
+            }
+        }
+
+        // add remainder of list to sortedList
+        if(countLeft == left.size())
+            sortedList.addAll(right);
+        else
+            sortedList.addAll(left);
+
+        return sortedList;
     }
 
 
