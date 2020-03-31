@@ -29,7 +29,7 @@ public class Sort<T extends Comparable<T>> {
 
     /*
     min item is selected, then added to the beginning of unsorted list.
-    next iteration, it becomes the last item in the sorted list
+    Next iteration, it becomes the last item in the sorted list
      */
     public List<T> selectionSort(List<T> list) {
         // loop through the entire list
